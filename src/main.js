@@ -11,7 +11,8 @@ Vue.use(VueMaterial)
 import Axios from 'axios'
 Vue.$http = Axios
 
-Axios.defaults.baseURL = 'https://karn-iccs340-project.herokuapp.com/'
+// Axios.defaults.baseURL = 'https://karn-iccs340-project.herokuapp.com/'
+Axios.defaults.baseURL = 'http://localhost:3000/'
 Axios.defaults.headers.common.Accept = 'application/json'
 Axios.defaults.withCredentials = true
 

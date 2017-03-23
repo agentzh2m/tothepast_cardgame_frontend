@@ -1,7 +1,7 @@
 <template>
   <div class="posts">
 
-    <h2>ROOMS</h2>
+    <h1>ROOMS</h1>
     <md-list class="custom-list md-triple-line" v-for="post in posts" :key="post.id">
       <md-list-item>
         <md-icon class="md-primary">supervisor_account</md-icon>

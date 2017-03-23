@@ -1,6 +1,7 @@
 <template>
   <div class="sign-up">
     <md-list class="md-double-line">
+      <h1 id="font">To The Past</h1>
       <h2>Register</h2>
       <md-list-item>
         <div class="md-list-text-container">
@@ -28,7 +29,6 @@
       </md-list-item>
       <md-list-item>
         <span style="flex: 1"></span>
-        <md-button class="md-raised md-primary" @click.native="toLogin">Back</md-button>
         <md-button class="md-raised md-primary" @click.native="toLogin">Submit</md-button>
         <span style="flex: 1"></span>
       </md-list-item>
@@ -56,6 +56,11 @@ export default {
 </script>
 
 <style>
+  #font {
+    font-family: 'Almendra SC';
+    font-size: 120px;
+    /*width: 100%;*/
+  }
   .sign-up {
     width: 50%;
     margin: auto;
