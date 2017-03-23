@@ -3,6 +3,9 @@
     <div v-if="$store.getters.loggedIn">
       <nav-bar></nav-bar>
     </div>
+    <div v-else>
+      <front-nav></front-nav>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -11,7 +14,8 @@
 export default {
   name: 'app',
   components: {
-    NavBar: require('./NavBar')
+    NavBar: require('./NavBar'),
+    FrontNav: require('./FrontNav')
   }
 }
 </script>

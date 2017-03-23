@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 // initial state of the app
 const state = {
-  auth: false
+  auth: false,
+  isReg: false
 }
 
 // mutations are operations that actually mutates the state.
@@ -21,6 +22,11 @@ const mutations = {
     console.log('mutations logout')
     state.auth = false
     router.push({ name: 'Users.sign_in' })
+  },
+  signup (state) {
+    console.log('mutations signup')
+    state.isReg = true
+    router.push({ name: 'Register.sign_up' })
   }
 }
 
@@ -28,7 +34,8 @@ const mutations = {
 // example `store.dispatch('login')` will call `login` action and then mutate the state using `mutations.login`
 const actions = {
   login: ({ commit }) => commit('login'),
-  logout: ({ commit }) => commit('logout')
+  logout: ({ commit }) => commit('logout'),
+  signup: ({ commit }) => commit('signup')
 }
 
 // just getter functions.

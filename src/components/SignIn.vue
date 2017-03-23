@@ -28,7 +28,6 @@
       <md-list-item>
         <span style="flex: 1"></span>
         <md-button class="md-raised md-primary" @click.native="login">Login</md-button>
-        <md-button class="md-raised md-primary">Sign Up</md-button>
         <span style="flex: 1"></span>
       </md-list-item>
     </md-list>
@@ -51,7 +50,6 @@ export default {
     login () {
       console.log('methods.login')
       UsersApi.login(this.email, this.password, function (_response) {
-        // NOTE: Posts.index is not yet implemented
         router.push({ name: 'Posts.index' })
       })
     }
