@@ -64,9 +64,7 @@ export default {
     margin: auto;
   }
   .sign-in {
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     width: 100%;
     text-align: center;
   }

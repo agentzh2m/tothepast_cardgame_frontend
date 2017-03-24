@@ -1,11 +1,8 @@
 <template>
   <div class="new-room">
     <md-list class="md-double-line">
-      <md-subheader class="md-inset">New Room</md-subheader>
+      <md-subheader>New Room</md-subheader>
       <md-list-item>
-        <md-avatar class="md-avatar-icon">
-          <md-icon>folder</md-icon>
-        </md-avatar>
         <div class="md-list-text-container">
           <md-input-container>
             <label>Name</label>
@@ -49,3 +46,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .new-room {
+    margin: auto;
+    text-align: center;
+    width: 80%;
+  }
+</style>

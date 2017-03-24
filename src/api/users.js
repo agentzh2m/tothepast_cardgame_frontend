@@ -2,6 +2,22 @@ import Vue from 'vue'
 import store from '../store'
 
 export default {
+  register (email, password, name, callback) {
+    var regisParams = {
+      user: {
+        email: email,
+        password: password,
+        name: name
+      }
+    }
+    Vue.$http.post('/users/register', regisParams)
+    .then(function (response) {
+      callback(response.data)
+    })
+    .catch(function (response) {
+      console.log('error regis')
+    })
+  },
   login (email, password, callback) {
     console.log(store)
     var loginParams = {
@@ -10,7 +26,7 @@ export default {
         password: password
       }
     }
-    Vue.$http.post('/users/api_sign_in.json', loginParams)
+    Vue.$http.post('/users/login', loginParams)
     .then(function (response) {
       store.dispatch('login')
       callback(response.data)
@@ -21,7 +37,7 @@ export default {
   },
   logout (callback) {
     console.log(store)
-    Vue.$http.delete('/users/api_sign_out.json')
+    Vue.$http.delete('/users/logout')
     .then(function (response) {
       store.dispatch('logout')
       callback(response.data)
@@ -31,7 +47,7 @@ export default {
     })
   },
   checkLoggedIn () {
-    Vue.$http.get('/users/check_signed_in.json')
+    Vue.$http.get('/users/whoami')
     .then(function (response) {
       store.dispatch('login')
     })

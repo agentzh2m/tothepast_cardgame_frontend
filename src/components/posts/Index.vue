@@ -2,6 +2,7 @@
   <div class="posts">
 
     <h1>ROOMS</h1>
+    <br><br>
     <md-list class="custom-list md-triple-line" v-for="post in posts" :key="post.id">
       <md-list-item>
         <md-icon class="md-primary">supervisor_account</md-icon>
@@ -53,6 +54,8 @@ export default {
 
 <style scoped>
   .posts {
-    padding: 0 10px;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>

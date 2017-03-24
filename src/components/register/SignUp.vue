@@ -38,6 +38,8 @@
 
 <script>
 import router from '../../router'
+import UsersApi from '../../api/users.js'
+
 export default {
   name: 'sign-up',
   data () {
@@ -49,7 +51,9 @@ export default {
   },
   methods: {
     toLogin () {
-      router.push({ name: 'Users.sign_in' })
+      UsersApi.register(this.email, this.password, this.name, function (_response) {
+        router.push({ name: 'Users.sign_in' })
+      })
     }
   }
 }
