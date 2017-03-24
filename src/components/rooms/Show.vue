@@ -1,20 +1,20 @@
 <template>
   <div class="show">
     <!-- <iccs340-post v-if="post.user" :post='post'></iccs340-post> -->
-    {{ post.id }}
+    {{ room.name }}
     sdfsdf
   </div>
 </template>
 
 
 <script>
-import PostsApi from '../../api/posts.js'
+import RoomsApi from '../../api/rooms.js'
 
 export default {
-  name: 'posts',
-  components: {
-    Iccs340Post: require('./Post')
-  },
+  name: 'rooms',
+  // components: {
+  //   Iccs340Room: require('./Rooms')
+  // },
   data () {
     return {
       post: {},
@@ -33,8 +33,8 @@ export default {
   },
   methods: {
     fetchData () {
-      PostsApi.getPost(this.$route.params.id, _post => {
-        this.post = _post
+      RoomsApi.getRooms(this.$route.params.id, _room => {
+        this.room = _room
       })
     }
   }

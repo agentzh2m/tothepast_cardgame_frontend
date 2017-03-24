@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/register/SignUp.vue'
-import PostsIndex from '@/components/posts/Index.vue'
-import PostsNew from '@/components/posts/New.vue'
+import RoomsIndex from '@/components/rooms/Index.vue'
+import RoomsNew from '@/components/rooms/New.vue'
 import UserAcc from '@/components/users/Acc.vue'
-import PostsShow from '@/components/posts/Show.vue'
+import RoomsShow from '@/components/rooms/Show.vue'
 import GameInfo from '@/components/gameInfo/info.vue'
 
 Vue.use(Router)
@@ -22,14 +22,14 @@ export default new Router({
       component: SignIn
     },
     {
-      path: '/posts',
-      name: 'Posts.index',
-      component: PostsIndex
+      path: '/rooms',
+      name: 'Rooms.index',
+      component: RoomsIndex
     },
     {
-      path: '/posts/new',
-      name: 'Posts.new',
-      component: PostsNew
+      path: '/rooms/new',
+      name: 'Rooms.new',
+      component: RoomsNew
     },
     {
       path: '/users',
@@ -37,9 +37,9 @@ export default new Router({
       component: UserAcc
     },
     {
-      path: '/posts/:id',
-      name: 'Posts.show',
-      component: PostsShow
+      path: '/rooms/:id',
+      name: 'Rooms.show',
+      component: RoomsShow
     },
     {
       path: '/sign_up',

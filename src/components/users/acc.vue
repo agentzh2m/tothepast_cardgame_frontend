@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PostsApi from '../../api/posts.js'
+import RoomsApi from '../../api/rooms.js'
 
 export default {
   name: 'acc',
@@ -16,16 +16,16 @@ export default {
     }
   },
   beforeRouteEnter (to, from, _next) {
-    PostsApi.getPosts(_posts => {
+    RoomsApi.getRooms(_rooms => {
       _next(vm => {
-        vm.posts = _posts
+        vm.rooms = _rooms
       })
     })
   },
   watch: {
     $route () {
-      PostsApi.getPosts(_posts => {
-        this.posts = _posts
+      RoomsApi.getRooms(_rooms => {
+        this.rooms = _rooms
       })
     }
   }

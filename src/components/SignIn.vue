@@ -46,7 +46,7 @@ export default {
     login () {
       console.log('methods.login')
       UsersApi.login(this.email, this.password, function (_response) {
-        router.push({ name: 'Posts.index' })
+        router.push({ name: 'Rooms.index' })
       })
     }
   }
