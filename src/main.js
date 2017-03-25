@@ -17,6 +17,7 @@ Axios.defaults.headers.common.Accept = 'application/json'
 Axios.defaults.withCredentials = true
 
 Vue.config.productionTip = false
+// UsersApi.checkInRoom()
 UsersApi.checkLoggedIn()
 
 /* eslint-disable no-new */

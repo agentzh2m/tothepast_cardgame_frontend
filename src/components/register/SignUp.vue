@@ -30,7 +30,7 @@
         </md-list-item>
         <md-list-item>
           <span style="flex: 1"></span>
-          <md-button class="md-raised md-primary" @click.native="toLogin">Submit</md-button>
+          <md-button class="md-raised md-primary" @click.native="toLogin" style="background-color: black;">Submit</md-button>
           <span style="flex: 1"></span>
         </md-list-item>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="$store.getters.loggedIn">
+    <div v-if="$store.getters.loggedIn || $store.getters.roomIn" >
       <nav-bar></nav-bar>
     </div>
     <div v-else>

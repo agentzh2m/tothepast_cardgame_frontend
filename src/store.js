@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from './router'
+import UsersApi from '@/api/users.js'
 
 Vue.use(Vuex)
 
 // initial state of the app
 const state = {
   auth: false,
-  isReg: false
+  isReg: false,
+  uReady: false,
+  inRoom: false
 }
 
 // mutations are operations that actually mutates the state.
@@ -15,8 +18,16 @@ const state = {
 const mutations = {
   login (state) {
     console.log('mutations login')
-    state.auth = true
-    router.push({ name: 'Rooms.index' })
+    UsersApi.checkInRoom(function (response) {
+      if (response.status === 'unready') {
+        state.inRoom = true
+        state.auth = true
+        router.push({name: 'Rooms.show', params: {id: response.id}})
+      } else {
+        state.auth = true
+        router.push({ name: 'Rooms.index' })
+      }
+    })
   },
   logout (state) {
     console.log('mutations logout')
@@ -27,6 +38,25 @@ const mutations = {
     console.log('mutations signup')
     state.isReg = true
     router.push({ name: 'Register.sign_up' })
+  },
+  roomJoin (state) {
+    console.log('roomJoin: mutations in the room')
+    UsersApi.checkInRoom(function (response) {
+      if (response.status === 'unready') {
+        state.inRoom = true
+        // state.auth = false
+        router.push({name: 'Rooms.show', params: {id: response.id}})
+      } else {
+        state.auth = true
+        router.push({ name: 'Rooms.index' })
+      }
+    })
+  },
+  roomExit (state) {
+    console.log('exit room')
+    state.inRoom = false
+    state.auth = true
+    console.log('in-room: ', state.inRoom)
   }
 }
 
@@ -35,12 +65,16 @@ const mutations = {
 const actions = {
   login: ({ commit }) => commit('login'),
   logout: ({ commit }) => commit('logout'),
-  signup: ({ commit }) => commit('signup')
+  signup: ({ commit }) => commit('signup'),
+  userReady: ({ commit }) => commit('userReady'),
+  roomJoin: ({ commit }) => commit('roomJoin'),
+  roomExit: ({ commit }) => commit('roomExit')
 }
 
 // just getter functions.
 const getters = {
-  loggedIn: state => state.auth
+  loggedIn: state => state.auth,
+  roomIn: state => state.inRoom
 }
 
 // singleton pattern for ES6

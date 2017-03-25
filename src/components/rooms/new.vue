@@ -23,7 +23,9 @@
 
 <script>
 import RoomsApi from '../../api/rooms.js'
-import router from '../../router'
+// import LobbyApi from '../../api/lobby.js'
+// import router from '../../router'
+import store from '../../store'
 
 export default {
   name: 'new-room',
@@ -35,10 +37,11 @@ export default {
     }
   },
   methods: {
-    createRoom () {
+    createRoom (_id) {
       RoomsApi.createRoom(this.room,
         function (_room) {
-          router.push({ name: 'Rooms.index' })
+          store.dispatch('roomJoin')
+          // router.push({name: 'Rooms.show', params: { id: _room.room_id }})
         }
       )
     }
