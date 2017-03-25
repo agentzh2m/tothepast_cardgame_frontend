@@ -56,7 +56,8 @@ const mutations = {
     console.log('exit room')
     state.inRoom = false
     state.auth = true
-    console.log('in-room: ', state.inRoom)
+    router.push({ name: 'Rooms.index' })
+    // console.log('in-room: ', state.inRoom)
   }
 }
 

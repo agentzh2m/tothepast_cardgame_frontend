@@ -6,7 +6,7 @@
         <div class="md-list-text-container">
           <md-input-container>
             <label>Name</label>
-            <md-input v-model="room.name" placeholder="Name"></md-input>
+            <md-input v-model="room.name" placeholder="Name" @keyup.enter.native="createRoom"></md-input>
           </md-input-container>
         </div>
       </md-list-item>

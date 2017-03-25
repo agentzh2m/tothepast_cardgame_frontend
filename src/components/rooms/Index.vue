@@ -22,7 +22,7 @@
 import RoomsApi from '../../api/rooms.js'
 import LobbyApi from '../../api/lobby.js'
 // import router from '../../router'
-import UsersApi from '../../api/users.js'
+// import UsersApi from '../../api/users.js'
 // import store from '../../store'
 
 export default {
@@ -43,6 +43,7 @@ export default {
   },
   watch: {
     $route () {
+      this.fetchData()
       RoomsApi.getRooms(_rooms => {
         this.rooms = _rooms
         console.log(_rooms)
@@ -50,8 +51,15 @@ export default {
     }
   },
   methods: {
+    fetchData () {
+      RoomsApi.getRoom(this.$route.params.id, _room => {
+        // store.dispatch('room')
+        this.room = _room
+        console.log('room: ', _room)
+      })
+    },
     joinLobby (id) {
-      UsersApi.checkInRoom()
+      // UsersApi.checkInRoom()
       LobbyApi.joinLobby(id)
       this.$router.push(this.$route.path + '/' + id)
     }
