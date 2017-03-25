@@ -21,7 +21,7 @@ export default {
     })
   },
   createRoom (params, callback, errCallback) {
-    console.log('params:', params)
+    // console.log('params:', params)
     var roomParams = { room: params }
     Vue.$http.post('/rooms.json', roomParams)
     // Vue.$http.post('/rooms.json', params)

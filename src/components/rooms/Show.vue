@@ -9,13 +9,13 @@
       <md-card-content id="text-al">
         <h3>Players: </h3>
         <div v-for="user in room.room_users" :key="room.room_id">
-          {{ user.name }}
+          {{ user.name }} {{ user.status }}
         </div>
       </md-card-content>
 
       <md-card-actions>
         <md-button class="md-default" id="btn-color" @click.native="leave">Leave</md-button>
-        <md-button class="md-primary">Ready</md-button>
+        <md-button class="md-primary" @click.native="ready()">Ready</md-button>
       </md-card-actions>
     </md-card>
   </div>
@@ -24,7 +24,7 @@
 
 <script>
 import RoomsApi from '../../api/rooms.js'
-// import UsersApi from '../../api/users.js'
+import UsersApi from '../../api/users.js'
 import LobbyApi from '../../api/lobby.js'
 import router from '../../router'
 // import store from '../../store'
@@ -34,7 +34,8 @@ export default {
   data () {
     return {
       room: [],
-      error: null
+      error: null,
+      runner: null
     }
   },
   created () {
@@ -49,14 +50,31 @@ export default {
   methods: {
     fetchData () {
       RoomsApi.getRoom(this.$route.params.id, _room => {
-        // store.dispatch('room')
         this.room = _room
-        console.log('room: ', _room)
       })
+      var self = this
+      self.runner = setInterval(function () {
+        RoomsApi.getRoom(self.$route.params.id, (_room) => {
+          // store.dispatch('room')
+          self.room = _room
+          if (_room.room_users.filter(u => u.status === 'ready').size === 4) {
+            clearInterval(this.runner)
+            router.push({name: 'GameSession.play'})
+          }
+          // console.log('room: ', _room)
+        })
+      }, 2000)
     },
     leave () {
+      clearInterval(this.runner)
       LobbyApi.exitLobby()
       router.push({ name: 'Rooms.index' })
+    },
+    ready () {
+      UsersApi.getUsers(function (response) {
+        var currentUserStatus = response.user.status
+        LobbyApi.userReady(currentUserStatus)
+      })
     }
   }
 }

@@ -24,5 +24,25 @@ export default {
     .catch(function (response) {
       console.log(response.data)
     })
+  },
+  userReady (status, callback) {
+    console.log('status = ', status)
+    if (status === 'unready') {
+      Vue.$http.get('/lobby/ready')
+      .then(function (response) {
+        callback(response.data)
+      })
+      .catch(function (response) {
+        console.log('user not ready')
+      })
+    } else if (status === 'ready') {
+      Vue.$http.get('/lobby/unready')
+      .then(function (response) {
+        callback(response.data)
+      })
+      .catch(function (response) {
+        console.log('user not ready')
+      })
+    }
   }
 }
