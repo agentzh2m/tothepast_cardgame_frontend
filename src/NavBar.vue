@@ -2,7 +2,7 @@
   <div class="nav-bar">
     <md-toolbar class="md-dense" style="background-color: black">
       <md-button class="md-dense" @click.native="homePage"><md-icon>home</md-icon></md-button>
-      <span>Hello,{{ currentUser }}</span>
+      <span style="font-size: 15px;">Hello, <b>{{ currentUser }}</b></span>
       <md-button class="md-dense" @click.native="newRoom">Create Room</md-button>
       <md-button class="md-dense" @click.native="logout">Log Out</md-button>
     </md-toolbar>
@@ -18,7 +18,7 @@ export default {
   name: 'nav-bar',
   data () {
     return {
-      currentUser: null
+      currentUser: ''
     }
   },
   created () {
@@ -32,9 +32,9 @@ export default {
   },
   methods: {
     fetchData () {
+      var self = this
       UsersApi.getUsers(function (response) {
-        this.currentUser = response.user.name
-        console.log('name:', this.currentUser)
+        self.currentUser = response.user.name
       })
     },
     newRoom () {
