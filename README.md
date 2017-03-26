@@ -3,6 +3,8 @@
 * Nattakarn Klongyut u5780130
 * Worapol
 
+> UML diagram --> UML.png
+
 ## Build Setup
 
 ``` bash
