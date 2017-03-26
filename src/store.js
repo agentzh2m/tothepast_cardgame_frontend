@@ -9,7 +9,8 @@ Vue.use(Vuex)
 const state = {
   auth: false,
   isReg: false,
-  inRoom: false
+  inRoom: false,
+  inGame: false
 }
 
 // mutations are operations that actually mutates the state.
@@ -59,6 +60,10 @@ const mutations = {
     state.auth = true
     router.push({ name: 'Rooms.index' })
     // console.log('in-room: ', state.inRoom)
+  },
+  inGame (state) {
+    state.inGame = true
+    router.push({name: 'GameSession.play'})
   }
 }
 
@@ -69,13 +74,15 @@ const actions = {
   logout: ({ commit }) => commit('logout'),
   signup: ({ commit }) => commit('signup'),
   roomJoin: ({ commit }) => commit('roomJoin'),
-  roomExit: ({ commit }) => commit('roomExit')
+  roomExit: ({ commit }) => commit('roomExit'),
+  inGame: ({ commit }) => commit('inGame')
 }
 
 // just getter functions.
 const getters = {
   loggedIn: state => state.auth,
-  roomIn: state => state.inRoom
+  roomIn: state => state.inRoom,
+  inGame: state => state.inGame
 }
 
 // singleton pattern for ES6

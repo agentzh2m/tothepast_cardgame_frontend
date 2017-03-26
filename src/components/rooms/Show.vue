@@ -15,7 +15,9 @@
 
       <md-card-actions>
         <md-button class="md-default" id="btn-color" @click.native="leave">Leave</md-button>
-        <md-button class="md-primary" @click.native="ready()">Ready</md-button>
+        <md-button-toggle class="md-accent">
+          <md-button class="md-primary" @click.native="ready()">Ready</md-button>
+        </md-button-toggle>
       </md-card-actions>
     </md-card>
   </div>
@@ -27,7 +29,7 @@ import RoomsApi from '../../api/rooms.js'
 import UsersApi from '../../api/users.js'
 import LobbyApi from '../../api/lobby.js'
 import router from '../../router'
-// import store from '../../store'
+import store from '../../store'
 
 export default {
   name: 'room',
@@ -57,9 +59,11 @@ export default {
         RoomsApi.getRoom(self.$route.params.id, (_room) => {
           // store.dispatch('room')
           self.room = _room
-          if (_room.room_users.filter(u => u.status === 'ready').size === 4) {
-            clearInterval(this.runner)
-            router.push({name: 'GameSession.play'})
+          // console.log(_room.room_users.filter(u => u.status === 'ready').size)
+          if (_room.room_users.filter(u => u.status === 'ready').length === 4) {
+            clearInterval(self.runner)
+            store.dispatch('inGame')
+            // router.push({name: 'GameSession.play'})
           }
           // console.log('room: ', _room)
         })

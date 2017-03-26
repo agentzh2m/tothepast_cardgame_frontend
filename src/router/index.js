@@ -53,7 +53,7 @@ export default new Router({
       component: GameInfo
     },
     {
-      path: 'game_session/play',
+      path: '/play',
       name: 'GameSession.play',
       component: GameSession
     }
