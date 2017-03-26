@@ -1,8 +1,8 @@
 # tothepast_frontend
 
-> A Vue.js project
-> Nattakarn Klongyut u5780130
-> Worapol
+> A Vue.js project \
+> Nattakarn Klongyut u5780130 \
+> Worapol \
 
 ## Build Setup
 
