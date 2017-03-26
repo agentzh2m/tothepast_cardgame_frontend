@@ -10,7 +10,12 @@
             <span><b>{{ room.room_name }}</b></span><br>
             <span>Status: {{ room.room_status }}</span>
           </div>
-          <md-button class="md-raised md-primary" @click.native="joinLobby(room.room_id)">enter</md-button>
+          <div v-if="room.room_status === 'playing'">
+            <md-button class="md-raised md-primary" disabled>enter</md-button>
+          </div>
+          <div v-else>
+            <md-button class="md-raised md-primary" @click.native="joinLobby(room.room_id)">enter</md-button>
+          </div>
         </md-list-item>
         <md-divider class="md-inset"></md-divider>
       </md-list>
@@ -37,7 +42,7 @@ export default {
     RoomsApi.getRooms(_rooms => {
       _next(vm => {
         vm.rooms = _rooms
-        console.log(_rooms)
+        // console.log(_rooms)
       })
     })
   },
@@ -46,16 +51,15 @@ export default {
       this.fetchData()
       RoomsApi.getRooms(_rooms => {
         this.rooms = _rooms
-        console.log(_rooms)
+        // console.log(_rooms)
       })
     }
   },
   methods: {
     fetchData () {
       RoomsApi.getRoom(this.$route.params.id, _room => {
-        // store.dispatch('room')
         this.room = _room
-        console.log('room: ', _room)
+        // console.log('room: ', _room)
       })
     },
     joinLobby (id) {

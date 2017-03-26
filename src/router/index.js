@@ -4,7 +4,6 @@ import SignIn from '@/components/SignIn'
 import SignUp from '@/components/register/SignUp.vue'
 import RoomsIndex from '@/components/rooms/Index.vue'
 import RoomsNew from '@/components/rooms/New.vue'
-import UserAcc from '@/components/users/Acc.vue'
 import RoomsShow from '@/components/rooms/Show.vue'
 import GameInfo from '@/components/gameInfo/Info.vue'
 import GameSession from '@/components/gameSession/Play.vue'
@@ -31,11 +30,6 @@ export default new Router({
       path: '/rooms/new',
       name: 'Rooms.new',
       component: RoomsNew
-    },
-    {
-      path: '/users',
-      name: 'Users.acc',
-      component: UserAcc
     },
     {
       path: '/rooms/:id',

@@ -49,9 +49,8 @@ export default {
   checkLoggedIn (callback) {
     Vue.$http.get('/users/whoami')
     .then(function (response) {
-      console.log('state', store.getters.loggedIn)
       store.dispatch('login')
-      console.log('state', store.getters.loggedIn)
+      console.log('logged in')
       // callback(response.data)
     })
     .catch(function (response) {
@@ -59,17 +58,16 @@ export default {
       // callback(response.data)
     })
   },
-  getUsers (callback, errCallback) {
+  getUsers (callback) {
     Vue.$http.get('/users/whoami')
     .then(function (response) {
       callback(response.data)
     })
     .catch(function (response) {
-      errCallback(response)
+      console.log('err get users')
     })
   },
   getUser (userId, callback) {
-    // Formatted string in JS is wrapped by ` not '
     Vue.$http.get(`/rooms/${userId}.json`)
     .then(function (response) {
       callback(response.data)

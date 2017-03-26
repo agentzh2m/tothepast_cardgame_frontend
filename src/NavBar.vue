@@ -2,7 +2,7 @@
   <div class="nav-bar">
     <md-toolbar class="md-dense" style="background-color: black">
       <md-button class="md-dense" @click.native="homePage"><md-icon>home</md-icon></md-button>
-      <md-button class="md-dense" @click.native="myAcc">My Account</md-button>
+      <span>Hello,{{ currentUser }}</span>
       <md-button class="md-dense" @click.native="newRoom">Create Room</md-button>
       <md-button class="md-dense" @click.native="logout">Log Out</md-button>
     </md-toolbar>
@@ -15,7 +15,28 @@ import UsersApi from './api/users.js'
 import router from './router'
 
 export default {
+  name: 'nav-bar',
+  data () {
+    return {
+      currentUser: null
+    }
+  },
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
+  },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
+  },
   methods: {
+    fetchData () {
+      UsersApi.getUsers(function (response) {
+        this.currentUser = response.user.name
+        console.log('name:', this.currentUser)
+      })
+    },
     newRoom () {
       router.push({ name: 'Rooms.new' })
     },
@@ -24,9 +45,6 @@ export default {
     },
     logout () {
       UsersApi.logout()
-    },
-    myAcc () {
-      router.push({ name: 'Users.acc' })
     }
   }
 }

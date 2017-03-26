@@ -20,7 +20,7 @@
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
-          <md-layout md-align="center" md-flex="35" id="txt-info">
+          <md-layout md-align="left" md-flex="35" id="txt-info">
             <br>
             <div v-if="otherPlayers[1].is_turn === true">
               <br>
@@ -48,7 +48,7 @@
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
-          <md-layout md-align="center" md-flex="35" id="txt-info">
+          <md-layout md-align="left" md-flex="35" id="txt-info">
             <br>
             <div v-if="otherPlayers[0].is_turn === true">
               <br>
@@ -67,7 +67,6 @@
           <br>
           <br>
           <br>
-          text log
         </md-layout>
         <!-- mid right -->
         <md-layout md-align="center" md-flex="33">
@@ -77,7 +76,7 @@
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
-          <md-layout md-align="center" md-flex="35" id="txt-info">
+          <md-layout md-align="left" md-flex="35" id="txt-info">
             <br><br>
             <div v-if="otherPlayers[2].is_turn === true">
               <br>
@@ -152,10 +151,10 @@
       <md-layout id="my-txt-info">
         <ul>
           <br>
-          <div v-if="isMyTurn === true" style="font-size: 25px;">
+          <div v-if="isMyTurn === true" style="font-size: 35px;">
             <span style="color: #42FE48;"><b>{{ currentUser }}</b></span>'s turn
           </div>
-          <div v-else>
+          <div v-else style="font-size: 35px;">
             <b>{{ currentUser }}</b>
           </div>
           <br>
@@ -263,8 +262,9 @@ export default {
     padding-bottom: 100px;
   }
   #txt-info {
+    padding-left: 10px;
     text-align: left;
-    font-size: 130%;
+    font-size: 150%;
   }
   #my-txt-info {
     margin-right: 2%;
@@ -280,6 +280,7 @@ export default {
     text-align: center;
   }
   #quit {
+    margin-top: 5%;
     margin-left: 10%;
   }
 </style>

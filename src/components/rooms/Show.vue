@@ -3,13 +3,18 @@
     <!-- <api-room v-if="room"></api-room> -->
     <md-card md-with-hover>
       <md-card-header>
-        <div class="md-title">Room: {{ room.room_name }}</div>
+        <div class="md-title">Room: <b>{{ room.room_name }}</b></div>
         <div class="md-subhead">Status: {{ room.room_status }}</div>
       </md-card-header>
       <md-card-content id="text-al">
-        <h3>Players: </h3>
-        <div v-for="user in room.room_users" :key="room.room_id">
-          {{ user.name }} {{ user.status }}
+        <p style="font-size: 20px;">Players: </p>
+        <div v-for="user in room.room_users" :key="room.room_id" id="indent" style="font-size: 18px;">
+          <div v-if="user.status === 'ready'">
+            <li><b>{{ user.name }}</b>: <span style="color: green;">{{ user.status }}</span></li>
+          </div>
+          <div v-else>
+            <li><b>{{ user.name }}</b>: <span>{{ user.status }}</span></li>
+          </div>
         </div>
       </md-card-content>
 
@@ -98,5 +103,8 @@ export default {
 }
 #btn-color {
   color: red;
+}
+#indent {
+  padding-left: 20px;
 }
 </style>
