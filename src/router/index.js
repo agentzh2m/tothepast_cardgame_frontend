@@ -6,8 +6,8 @@ import RoomsIndex from '@/components/rooms/Index.vue'
 import RoomsNew from '@/components/rooms/New.vue'
 import UserAcc from '@/components/users/Acc.vue'
 import RoomsShow from '@/components/rooms/Show.vue'
-import GameInfo from '@/components/gameInfo/info.vue'
-import GameSession from '@/components/gameSession/play.vue'
+import GameInfo from '@/components/gameInfo/Info.vue'
+import GameSession from '@/components/gameSession/Play.vue'
 
 Vue.use(Router)
 

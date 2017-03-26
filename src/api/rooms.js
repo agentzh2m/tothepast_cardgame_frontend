@@ -1,13 +1,13 @@
 import Vue from 'vue'
 
 export default {
-  getRooms (callback, errCallback) {
+  getRooms (callback) {
     Vue.$http.get('/rooms.json')
     .then(function (response) {
       callback(response.data)
     })
     .catch(function (response) {
-      errCallback(response)
+      console.log('error api getRooms')
     })
   },
   getRoom (roomId, callback) {
@@ -20,7 +20,7 @@ export default {
       console.log('error get room')
     })
   },
-  createRoom (params, callback, errCallback) {
+  createRoom (params, callback) {
     // console.log('params:', params)
     var roomParams = { room: params }
     Vue.$http.post('/rooms.json', roomParams)
@@ -29,7 +29,7 @@ export default {
       callback(response.data)
     })
     .catch(function (response) {
-      errCallback(response)
+      console.log('error api createRoom')
     })
   }
 }

@@ -19,7 +19,12 @@ const mutations = {
   login (state) {
     console.log('mutations login')
     UsersApi.checkInRoom(function (response) {
-      if (response.status === 'unready' || response.status === 'ready') {
+      if (response.status === 'playing') {
+        state.inRoom = false
+        state.auth = true
+        state.inGame = true
+        router.push({name: 'GameSession.play'})
+      } else if (response.status === 'unready' || response.status === 'ready') {
         state.inRoom = true
         state.auth = true
         router.push({name: 'Rooms.show', params: {id: response.id}})
@@ -64,6 +69,9 @@ const mutations = {
   inGame (state) {
     state.inGame = true
     router.push({name: 'GameSession.play'})
+  },
+  quitGame (state) {
+    state.inGame = false
   }
 }
 
@@ -75,7 +83,8 @@ const actions = {
   signup: ({ commit }) => commit('signup'),
   roomJoin: ({ commit }) => commit('roomJoin'),
   roomExit: ({ commit }) => commit('roomExit'),
-  inGame: ({ commit }) => commit('inGame')
+  inGame: ({ commit }) => commit('inGame'),
+  quitGame: ({ commit }) => commit('quitGame')
 }
 
 // just getter functions.

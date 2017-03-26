@@ -28,6 +28,7 @@
 import RoomsApi from '../../api/rooms.js'
 import UsersApi from '../../api/users.js'
 import LobbyApi from '../../api/lobby.js'
+// import GameApi from '../../api/game.js'
 import router from '../../router'
 import store from '../../store'
 
@@ -59,7 +60,8 @@ export default {
         RoomsApi.getRoom(self.$route.params.id, (_room) => {
           // store.dispatch('room')
           self.room = _room
-          // console.log(_room.room_users.filter(u => u.status === 'ready').size)
+          // console.log(_room.room_users)
+          // console.log(_room.room_users.filter(u => u.status === 'ready').length)
           if (_room.room_users.filter(u => u.status === 'ready').length === 4) {
             clearInterval(self.runner)
             store.dispatch('inGame')

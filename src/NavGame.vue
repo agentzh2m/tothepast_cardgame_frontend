@@ -1,16 +1,17 @@
 <template>
   <div class="nav-game">
     <md-toolbar class="md-dense" style="background-color: black">
-      <md-button class="md-dense" @click.native="quit" style="color: red;">Quit Game</md-button>
     </md-toolbar>
   </div>
 </template>
 
 
 <script>
-import router from './router'
+// import router from './router'
 import UsersApi from './api/users.js'
 import LobbyApi from './api/lobby.js'
+// import store from './store'
+import GameApi from './api/game.js'
 
 export default {
   methods: {
@@ -18,7 +19,7 @@ export default {
       UsersApi.getUsers(function (response) {
         console.log('quit and back to room id:', response.user.room_id)
         LobbyApi.userReady(response.user.status)
-        router.push({ name: 'Rooms.show', params: {id: response.user.room_id} })
+        GameApi.exitGame(response.user.room_id)
       })
     }
   }

@@ -1,8 +1,12 @@
 <template lang="html">
-  <div class="play">
-    <div class="other-player">
-      play time bitches<br>
-    </div>
+  <div class="play" :data='otherPlayers'>
+    <md-layout md-gutter>
+      <md-layout md-align="left" md-flex="33">
+        <md-button id="quit" @click.native="quit" style="color: red;">quit game</md-button>
+      </md-layout>
+    </md-layout>
+    <br>
+
     <!-- top row -->
     <div class="top-row">
       <md-layout md-gutter>
@@ -12,14 +16,20 @@
         <md-layout md-align="center" md-flex="33">
           <md-layout md-align="center" md-flex="35">
             <div class="img-size">
-              x 0
+              x {{ otherPlayers[1].num_card }}
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
           <md-layout md-align="center" md-flex="35" id="txt-info">
             <br>
-            Player: name<br>
-            Character: lol idk whatever<br>
+            <div v-if="otherPlayers[1].is_turn === true">
+              <br>
+              <span style="color: #42FE48;"><b>{{ otherPlayers[1].name }}</b></span>'s turn
+            </div>
+            <div v-else>
+              <br>
+              <b>{{ otherPlayers[1].name }}</b>
+            </div>
           </md-layout>
         </md-layout>
         <!-- top right -->
@@ -34,14 +44,20 @@
         <md-layout md-align="center" md-flex="33">
           <md-layout md-align="center" md-flex="35">
             <div class="img-size">
-              x 0
+              x {{ otherPlayers[0].num_card }}
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
           <md-layout md-align="center" md-flex="35" id="txt-info">
             <br>
-            Player: name<br>
-            Character: lol idk whatever<br>
+            <div v-if="otherPlayers[0].is_turn === true">
+              <br>
+              <span style="color: #42FE48;"><b>{{ otherPlayers[0].name }}</b></span>'s turn
+            </div>
+            <div v-else>
+              <br>
+              <b>{{ otherPlayers[0].name }}</b>
+            </div>
           </md-layout>
         </md-layout>
         <!-- mid -->
@@ -57,49 +73,66 @@
         <md-layout md-align="center" md-flex="33">
           <md-layout md-align="center" md-flex="35">
             <div class="img-size">
-              x 0
+              x {{ otherPlayers[2].num_card }}
               <img src="/static/cards/cardBack.jpg">
             </div>
           </md-layout>
           <md-layout md-align="center" md-flex="35" id="txt-info">
-            <br>
-            Player: name<br>
-            Character: lol idk whatever<br>
+            <br><br>
+            <div v-if="otherPlayers[2].is_turn === true">
+              <br>
+              <span style="color: #42FE48;"><b>{{ otherPlayers[2].name }}</b></span>'s turn
+            </div>
+            <div v-else>
+              <br>
+              <b>{{ otherPlayers[2].name }}</b>
+            </div>
           </md-layout>
         </md-layout>
       </md-layout>
     </div>
 
-    <!-- bottom row -->
+    <!-- bottom row, player: ME -->
     <!-- left box (card box) -->
     <md-layout md-gutter>
       <md-layout md-flex="75">
-        <div class="my-player">
-          <md-layout md-row md-gutter="16" id="card-holder">
+        <div class="my-player" :data="myCards">
+          <md-layout md-row md-gutter="16" id="card-holder">\
             <md-layout>
               <div id="img">
-                x 0
+                x {{ myCards["Gold"] }}
                 <md-button id="img"><img src="/static/cards/normalAction/gold.jpg"></md-button>
               </div>
             </md-layout>
+
             <md-layout>
               <div id="img">
-                x 0
+                x {{ myCards["Silver"] }}
+                <md-button id="img"><img src="/static/cards/normalAction/silver.jpg"></md-button>
+              </div>
+            </md-layout>
+
+            <md-layout>
+              <div id="img">
+                x {{ myCards["Steal"] }}
                 <md-button id="img"><img src="/static/cards/normalAction/steal.jpg"></md-button>
               </div>
             </md-layout>
+
             <md-layout>
               <div id="img">
-                x 0
+                x {{ myCards["Deny"] }}
                 <md-button id="img"><img src="/static/cards/normalAction/deny.jpg"></md-button>
               </div>
             </md-layout>
+
             <md-layout>
               <div id="img">
                 x 0
                 <md-button id="img"><img src="/static/cards/special/confess.jpg"></md-button>
               </div>
             </md-layout>
+
             <md-layout>
               <div id="img">
                 x 0
@@ -119,10 +152,16 @@
       <md-layout id="my-txt-info">
         <ul>
           <br>
-          Player: username<br><br>
-          Character: haha<br><br>
-          <md-button class="md-raised">draw</md-button>
-          <md-button class="md-raised">end turn</md-button>
+          <div v-if="isMyTurn === true" style="font-size: 25px;">
+            <span style="color: #42FE48;"><b>{{ currentUser }}</b></span>'s turn
+          </div>
+          <div v-else>
+            <b>{{ currentUser }}</b>
+          </div>
+          <br>
+          <span>Character: {{ myCharacter }}</span><br><br>
+          <md-button class="md-raised" @click.native="draw">draw</md-button>
+          <md-button class="md-raised" @click.native="endTurn">end turn</md-button>
         </ul>
       </md-layout>
     </md-layout>
@@ -130,47 +169,117 @@
 </template>
 
 <script>
+import GameApi from '../../api/game.js'
+import UsersApi from '../../api/users.js'
+import LobbyApi from '../../api/lobby.js'
+
 export default {
-  name: 'play'
+  name: 'play',
+  data () {
+    return {
+      isMyTurn: null,
+      currentUser: null,
+      otherPlayers: [],
+      myCharacter: null,
+      myCards: {'Gold': 0, 'Silver': 0, 'Deny': 0, 'Steal': 0},
+      myState: null,
+      error: null,
+      runner: null
+    }
+  },
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
+  },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData () {
+      var self = this
+      UsersApi.getUsers(function (response) {
+        self.currentUser = response.user.name
+      })
+      self.runner = setInterval(function () {
+        GameApi.getState(response => {
+          self.myState = response.is_my_turn
+          var myCards = {'Gold': 0, 'Silver': 0, 'Deny': 0, 'Steal': 0}
+          // console.log(response.my_card)
+          for (var card in response.my_card) {
+            myCards[response.my_card[card]] += 1
+          }
+          self.myCards = myCards
+          self.otherPlayers = response.other_player_state
+          self.myCharacter = response.my_character
+          self.isMyTurn = response.is_my_turn
+        })
+      }, 2000)
+    },
+    draw () {
+      GameApi.drawCard()
+    },
+    quit () {
+      UsersApi.getUsers(function (response) {
+        clearInterval(self.runner)
+        LobbyApi.userReady(response.user.status)
+        GameApi.exitGame(response.user.room_id)
+      })
+    },
+    endTurn () {
+      GameApi.endTurn()
+    }
+  }
 }
 </script>
 
 <style lang="css">
-.play {
-  margin: auto;
-  background-color: black;
-  color: white;
-}
-#img {
-    width: 115%;
+  .play {
+    margin: auto;
+    background-color: black;
+    color: white;
+  }
+  #red-cir {
+    width: 15%;
+  }
+  #green-cir {
+    width: 10%;
+  }
+  #img {
+      width: 115%;
+      font-size: 130%;
+  }
+  .img-size {
+    width: 80%;
+  }
+  #card-holder {
+    width: 100%;
+  }
+  .my-player {
+    margin-bottom: 5%;
+  }
+  .other-player {
+    padding-bottom: 100px;
+  }
+  #txt-info {
+    text-align: left;
     font-size: 130%;
-}
-.img-size {
-  width: 80%;
-}
-#card-holder {
-  width: 100%;
-}
-.my-player {
-  margin-bottom: 5%;
-}
-.other-player {
-  padding-bottom: 100px;
-}
-#txt-info {
-  text-align: left;
-  font-size: 100%;
-}
-#my-txt-info {
-  text-align: left;
-  font-size: 130%;
-}
-.top-row {
-  margin-bottom: 5%;
-  text-align: center;
-}
-.mid-row {
-  margin-bottom: 10%;
-  text-align: center;
-}
+  }
+  #my-txt-info {
+    margin-right: 2%;
+    text-align: left;
+    font-size: 130%;
+  }
+  .top-row {
+    margin-bottom: 5%;
+    text-align: center;
+  }
+  .mid-row {
+    margin-bottom: 10%;
+    text-align: center;
+  }
+  #quit {
+    margin-left: 10%;
+  }
 </style>
