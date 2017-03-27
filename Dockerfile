@@ -18,7 +18,7 @@ RUN npm run build
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN service nginx start
+CMD ["nginx", "-g", "daemon off;"]
 
 
 EXPOSE 8080
