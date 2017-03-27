@@ -100,14 +100,14 @@
             <md-layout>
               <div id="img">
                 x {{ myCards["Gold"] }}
-                <md-button id="img"><img src="/static/cards/normalAction/gold.jpg"></md-button>
+                <md-button @click.native="useGold('Gold')" id="img"><img src="/static/cards/normalAction/gold.jpg"></md-button>
               </div>
             </md-layout>
 
             <md-layout>
               <div id="img">
                 x {{ myCards["Silver"] }}
-                <md-button id="img"><img src="/static/cards/normalAction/silver.jpg"></md-button>
+                <md-button @click.native="useGold('Silver')" id="img"><img src="/static/cards/normalAction/silver.jpg"></md-button>
               </div>
             </md-layout>
 
@@ -159,6 +159,7 @@
           </div>
           <br>
           <span>Character: {{ myCharacter }}</span><br><br>
+          <span>Gold: {{ myGold }}</span><br><br>
           <md-button class="md-raised" @click.native="draw">draw</md-button>
           <md-button class="md-raised" @click.native="endTurn">end turn</md-button>
         </ul>
@@ -171,12 +172,15 @@
 import GameApi from '../../api/game.js'
 import UsersApi from '../../api/users.js'
 import LobbyApi from '../../api/lobby.js'
+import CardApi from '../../api/cards.js'
 
 export default {
   name: 'play',
   data () {
     return {
       isMyTurn: null,
+      myUserId: null,
+      myGold: null,
       currentUser: null,
       otherPlayers: [],
       myCharacter: null,
@@ -213,6 +217,7 @@ export default {
           self.otherPlayers = response.other_player_state
           self.myCharacter = response.my_character
           self.isMyTurn = response.is_my_turn
+          self.myGold = response.my_gold
         })
       }, 2000)
     },
@@ -228,6 +233,14 @@ export default {
     },
     endTurn () {
       GameApi.endTurn()
+    },
+    useGold (cardName) {
+      UsersApi.getUsers(function (response) {
+        self.myUserId = response.user.id
+        console.log('card name: ', cardName)
+        console.log('user id: ', self.myUserId)
+        CardApi.useCard(cardName, self.myUserId)
+      })
     }
   }
 }

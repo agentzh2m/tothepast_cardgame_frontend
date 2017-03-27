@@ -35,6 +35,7 @@ export default {
   data () {
     return {
       rooms: [],
+      runner: null,
       error: null
     }
   },
@@ -46,24 +47,32 @@ export default {
       })
     })
   },
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
+  },
   watch: {
-    $route () {
-      this.fetchData()
-      RoomsApi.getRooms(_rooms => {
-        this.rooms = _rooms
-        // console.log(_rooms)
-      })
-    }
+    // call again the method if the route changes
+    '$route': 'fetchData'
   },
   methods: {
     fetchData () {
-      RoomsApi.getRoom(this.$route.params.id, _room => {
-        this.room = _room
-        // console.log('room: ', _room)
-      })
+      var self = this
+      self.runner = setInterval(function () {
+        RoomsApi.getRooms(_rooms => {
+          self.rooms = _rooms
+          // console.log(_rooms)
+        })
+        // RoomsApi.getRoom(this.$route.params.id, _room => {
+        //   self.room = _room
+        //   console.log('room: ', _room)
+        // })
+      }, 2000)
     },
     joinLobby (id) {
       // UsersApi.checkInRoom()
+      clearInterval(self.runner)
       LobbyApi.joinLobby(id)
       this.$router.push(this.$route.path + '/' + id)
     }
