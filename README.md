@@ -1,7 +1,7 @@
 # tothepast_frontend
 
 * Nattakarn Klongyut u5780130
-* Worapol
+* Worapol Boontanonda 5780431
 
 > UML diagram --> UML.png
 
