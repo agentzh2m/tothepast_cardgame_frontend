@@ -5,7 +5,8 @@
 
 
 ## testing tip
-* download chrome extension called 'SessionBox' to be able to open new session in new tab
+* download chrome extension called 'SessionBox' to be able to open new session in new tab \n
+since this is a 4-kind-of-realtime-player-only game.
 
 ## Build Setup
 
