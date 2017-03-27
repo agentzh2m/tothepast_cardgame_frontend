@@ -2,9 +2,9 @@ FROM node:7
 
 RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install -y nginx
 
 WORKDIR /app
-
 
 # cache friendly
 ADD package.json /app/package.json
@@ -16,6 +16,9 @@ ENV NODE_ENV=production
 
 RUN npm run build
 
-EXPOSE 8080
+COPY nginx.conf /etc/nginx/nginx.conf
 
-CMD ["npm","run","dev"]
+CMD ["nginx", "-g", "daemon off;"]
+
+
+EXPOSE 8080
