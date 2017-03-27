@@ -13,7 +13,7 @@ export default {
       callback(response.data)
     })
     .catch(function (response) {
-      console.log('cannot use card')
+      console.log('error post use card')
     })
   }
 }
