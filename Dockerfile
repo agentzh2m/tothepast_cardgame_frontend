@@ -1,10 +1,8 @@
-FROM ubuntu
+FROM node:7
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y nodejs && \
-    apt-get install -y nginx && \
-    apt-get install -y npm
+RUN apt-get install -y nginx
 
 WORKDIR /app
 
