@@ -1,9 +1,11 @@
 # tothepast_frontend
 
 * Nattakarn Klongyut u5780130
-* Worapol Boontanonda 5780431
+* Worapol Boontanonda u5780431
 
-> UML diagram --> UML.png
+
+## testing tip
+* download chrome extension called 'SessionBox' to be able to open new session in new tab
 
 ## Build Setup
 
