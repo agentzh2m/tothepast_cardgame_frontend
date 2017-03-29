@@ -219,7 +219,7 @@ export default {
           self.isMyTurn = response.is_my_turn
           self.myGold = response.my_gold
         })
-      }, 2000)
+      }, 500)
     },
     draw () {
       GameApi.drawCard()

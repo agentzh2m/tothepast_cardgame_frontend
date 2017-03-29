@@ -74,7 +74,7 @@ export default {
           }
           // console.log('room: ', _room)
         })
-      }, 2000)
+      }, 500)
     },
     leave () {
       clearInterval(this.runner)

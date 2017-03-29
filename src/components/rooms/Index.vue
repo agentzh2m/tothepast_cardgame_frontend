@@ -68,7 +68,7 @@ export default {
         //   self.room = _room
         //   console.log('room: ', _room)
         // })
-      }, 2000)
+      }, 500)
     },
     joinLobby (id) {
       // UsersApi.checkInRoom()
