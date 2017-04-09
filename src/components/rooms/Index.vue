@@ -5,12 +5,13 @@
     <div class="container">
       <md-list class="custom-list md-triple-line" v-if="rooms" v-for="room in rooms.rooms" :key="room.room_id">
         <md-list-item>
-          <md-icon class="md-primary">supervisor_account</md-icon>
+          <md-icon class="md-primary">queue_play_next</md-icon>
           <div class="md-list-text-container">
             <span><b>{{ room.room_name }}</b></span><br>
             <span>Status: {{ room.room_status }}</span>
           </div>
           <div v-if="room.room_status === 'playing'">
+            <md-icon style="color: grey;">queue_play_next</md-icon>
             <md-button class="md-raised md-primary" disabled>enter</md-button>
           </div>
           <div v-else>

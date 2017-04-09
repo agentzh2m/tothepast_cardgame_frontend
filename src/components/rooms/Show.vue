@@ -6,14 +6,16 @@
         <div class="md-title">Room: <b>{{ room.room_name }}</b></div>
         <div class="md-subhead">Status: {{ room.room_status }}</div>
       </md-card-header>
+      <md-divider></md-divider>
+      <br>
       <md-card-content id="text-al">
-        <p style="font-size: 20px;">Players: </p>
-        <div v-for="user in room.room_users" :key="room.room_id" id="indent" style="font-size: 18px;">
+        <div v-for="user in room.room_users" :key="room.room_id"
+        id="indent" style="font-size: 18px;">
           <div v-if="user.status === 'ready'">
-            <li><b>{{ user.name }}</b>: <span style="color: green;">{{ user.status }}</span></li>
+            <i class="material-icons" style="color: green;">person</i> <b>{{ user.name }}</b>: <span style="color: green;">{{ user.status }}</span>
           </div>
           <div v-else>
-            <li><b>{{ user.name }}</b>: <span>{{ user.status }}</span></li>
+            <i class="material-icons">person</i> <b>{{ user.name }}</b>: <span>{{ user.status }}</span>
           </div>
         </div>
       </md-card-content>

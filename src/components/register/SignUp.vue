@@ -24,10 +24,19 @@
           <div class="md-list-text-container">
             <md-input-container>
               <label>Password</label>
-              <md-input v-model="password" placeholder="" type="password" @keyup.enter.native="toLogin"></md-input>
+              <md-input v-model="password" placeholder="" type="password"></md-input>
             </md-input-container>
           </div>
         </md-list-item>
+        <md-list-item>
+          <div class="md-list-text-container">
+            <md-input-container>
+              <label>Confirm Password</label>
+              <md-input v-model="conPassword" placeholder="" type="password" @keyup.enter.native="toLogin"></md-input>
+            </md-input-container>
+          </div>
+        </md-list-item>
+        <p style="color: red;">{{ msg }}</p>
         <md-list-item>
           <span style="flex: 1"></span>
           <md-button class="md-raised md-primary" @click.native="toLogin" style="background-color: black;">Submit</md-button>
@@ -48,14 +57,20 @@ export default {
     return {
       name: '',
       password: '',
-      email: ''
+      conPassword: '',
+      email: '',
+      msg: ''
     }
   },
   methods: {
     toLogin () {
-      UsersApi.register(this.email, this.password, this.name, function (_response) {
-        router.push({ name: 'Users.sign_in' })
-      })
+      if (this.password === this.conPassword) {
+        UsersApi.register(this.email, this.password, this.name, function (_response) {
+          router.push({ name: 'Users.sign_in' })
+        })
+      } else {
+        this.msg = 'Wrong password'
+      }
     }
   }
 }
